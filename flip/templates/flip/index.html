@@ -1,0 +1,62 @@
+{% load static %}
+<! DOCTYPE html>
+<!--<html lang="en">
+
+	<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+	<script
+src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script
+src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+	<script
+src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
+	<script src={% static 'flip/js/fab.js' %}>
+
+	</script>
+
+
+	</head>
+	<body>
+	</body>
+</html>
+-->
+
+ <html lang="en">
+	<head>
+		<!-- dependency : JQuery -->
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet"
+              href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+        <script
+              src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script
+              src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+        <script
+              src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+		<script src={% static "flip/lumencanvas-master/js/jquery/jquery-1.12.4.js" %}></script>
+		<script src={% static "flip/lumencanvas-master/js/jquery/jquery-ui.js"%}></script>
+		<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+		<!-- dependency : FabricJS & Spectrum plugin -->
+		<script src={% static "flip/lumencanvas-master/js/fabricjs/fabric.min.js"%}></script>
+		<link rel="stylesheet" href={% static "flip/lumencanvas-master/css/spectrum.css"%}>
+		<script src={% static "flip/lumencanvas-master/js/spectrum.js"%}></script>
+		<!-- LumenCanvas -->
+		<link rel="stylesheet" href={% static "flip/lumencanvas-master/css/lumen-canvas.css"%}>
+		<script src={% static "flip/lumencanvas-master/js/lumen-canvas.js"%}></script>
+	</head>
+	<body>
+		<div id="drawing-canvas" class="drawing-canvas" style="height: 600px; margin: 0 auto;"></div>
+		<script>
+console.log('in lumen canvas making lmn object');
+new LumenCanvas ({
+	selector : "#drawing-canvas"
+});
+</script>
+</body>
+</html>

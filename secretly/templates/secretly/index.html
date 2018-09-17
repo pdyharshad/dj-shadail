@@ -1,0 +1,112 @@
+{% extends "secretly/base.html" %}
+
+{% block content %}
+<ul class="nav nav-tabs" style="background-color: rgba(255, 99, 71, 0.2);">
+	{% for msg_type in message_type_list %}
+	{% if forloop.first %}
+	<li class="nav-item">
+		<a class="nav-link active" data-toggle="tab" href="#{{msg_type.msg_type}}"><u>{{msg_type.msg_type}}</u></a>
+	</li>
+	{% else %}
+
+	<li class="nav-item">
+		<a class="nav-link" data-toggle="tab" href="#{{msg_type.msg_type}}"><u>{{msg_type.msg_type}}</u></a>
+	</li>
+
+	{% endif %}
+	{% endfor %}
+	</li>
+</ul>
+
+<div class="tab-content">
+	{% for msg_type in message_type_list %}
+	{% if forloop.first %}
+	<div class="tab-pane active container-fluid" id="{{msg_type.msg_type}}">
+	</div>
+	{% else %}
+
+	<div class="tab-pane container-fluid" id="{{msg_type.msg_type}}">
+
+	</div>
+
+	{% endif %}
+	{% endfor %}
+</div>
+<script type="text/javascript">
+
+var app_url = "https://127.0.0.1/secretly/";
+var type_url = `${app_url}get_messagetype/`;
+function add_msg_divs(msg_url, type){
+	console.log($(`#${type}`));
+	var dv = $(`#${type}`);
+
+	dv.addClass("msg_bg");
+	console.log(dv);
+	frm = document.createElement("form");
+	frm.classList.add("form-inline");
+	$(frm).attr({action: ""});
+	inp = document.createElement("textarea");
+	$(inp).attr({type: "text", placeholder: "Enter Message", id: `frm-${type}`,style:"height:20%; background-color: rgba(255, 99, 71, 0.8)"});
+	inp.classList.add("form-control", "mb-2", "mr-sm-2");
+	frm.append(inp);
+	dv.append(frm);
+
+	add_msg_para(msg_url, dv, type);
+//	$(`#${type}`).append(dv);
+};
+function add_msg_para(msg_url, dv, type){
+	$.getJSON(msg_url, function(result){
+		$.each(result, function(i, field){
+			var pr = document.createElement("p");
+			pr.classList.add("trow-secretly", "text-center", "font-italic");
+			pr.append(`${field}`);
+			dv.append(pr);
+			var br = document.createElement("br");
+			dv.append(br);
+			console.log(type, msg_latest[type], i);
+			if (Number(msg_latest[type])<Number(i)){
+				msg_latest[type]=i; 
+			}
+		});
+
+		var fin_pr = document.createElement("p");
+		fin_pr.classList.add("trow-secretly", "text-center", "font-italic");
+		anc = document.createElement("a");
+		$(anc).text("Load More...");
+		$(anc).attr({href:"#", id:`load-${type}`, onclick: "load_messages(this)"});
+		fin_pr.append(anc);
+		dv.append(fin_pr);
+		dv.append(document.createElement("br"));
+
+	});
+
+};
+
+msg_latest={};
+function load_messages(el){
+	console.log($(el));
+	console.log(msg_latest);
+	console.log($(el).attr("id"));
+	el_id = $(el).attr("id").split("-");
+	type=el_id[1]
+	console.log(el_id);
+	dv=$(`#${type}`);
+	var msg_url = `${app_url}get_message/${type}/${msg_latest[type]}`;
+	add_msg_para(msg_url, dv, type);
+	$(el).hide();
+};
+$(document).ready(function(){
+	$.getJSON(type_url, function(result){
+		$.each(result, function(i, type){
+			msg_latest[type]=0
+			var msg_url = `${app_url}get_message/${type}/0`;
+			add_msg_divs(msg_url, type);
+		});
+	});
+	$(".nav-tabs a").click(function(){
+		$(this).tab('show');
+	});
+
+});
+</script>
+{% endblock %}

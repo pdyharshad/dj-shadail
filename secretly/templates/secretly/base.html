@@ -1,0 +1,136 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet"
+              href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+        <script
+              src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script
+              src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+        <script
+              src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+	<script src={% static 'secretly/js/fb.js' %}>
+
+	</script>
+        <style>
+
+        /* Make the image fully responsive */
+        .carousel-inner img {
+            width: 100%;
+            height: 100%;
+        }
+	
+<!--        .carousel-inner .carousel-item img{
+              min-height : 300px;
+                max-height : 300px;
+                  width : 100%;
+        }
+-->
+        .container-fluid {
+            background-color: #FFFFFF;
+        } 
+
+<!--        .container {
+            background-color: #D3D3D3;
+} -->
+	.trow-secretly {
+		    margin: auto;
+		    border-radius: 25px;			    
+	    	    background-color: rgba(255, 99, 71, 0.4);
+		    padding: 10px;
+		    width: 70%;
+		    text-align: center;
+		}
+	.msg_bg {
+		background-image: url({% static "secretly/images/hrdk_love.jpeg" %});
+		background-repeat: no-repeat;
+	        background-attachment: fixed;
+		
+		max-height: 700px;
+		overflow-y: scroll;
+		background-position: center;
+
+	}
+/*	.tab-pane {
+		max-height: 700px;
+		overflow-y: scroll;
+	}*/
+	.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active{
+		background-color: rgba(255, 99, 71, 0.4);
+	}
+
+	a.nav-link {
+	color: #004085;
+	}
+    </style>
+    <title>SecRetly</title>
+    </head>
+    <body>
+
+            <div id="cover" class="carousel slide" data-ride="carousel">
+                <!-- Indicators -->
+                <ul class="carousel-indicators">
+                    {% for msg_type in message_type_list %}
+                    {% if forloop.first %}
+                    <li data-target="#cover" data-slide-to={{ forloop.counter }} class="active"></li>
+                    {% else %}
+                    <li data-target="#cover" data-slide-to={{ forloop.counter }}></li>
+                    {% endif %}
+                    {% endfor %}
+                </ul>
+
+                <!-- The slideshow -->
+                <div class="carousel-inner">
+
+                    {% for msg_type in message_type_list %}
+                    {% if forloop.first %}
+                    <div class="carousel-item active">
+                        <img src={% static msg_type.src %} alt={{ msg_type.alt }} width="1100" height="500">
+                    </div>
+                    {% else %}
+                    <div class="carousel-item">
+                        <img src={% static msg_type.src %}
+                         alt={{ msg_type.alt  }} width="1100" height="500">
+                    </div>
+
+                        {% endif %}
+                        {% endfor %}
+                </div>
+
+                <!-- Left
+                    and
+                    right
+                    controls
+                -->
+                <a class="carousel-control-prev" href="#cover" data-slide="prev">
+                    <span class="carousel-control-prev-icon"></span>
+                </a>
+                <a class="carousel-control-next" href="#cover" data-slide="next">
+                    <span class="carousel-control-next-icon"></span>
+                </a>
+
+            </div>
+	<div id="fb-head" class="container-fluid">
+	<div id="fb-status" class="row"></div>
+	<div class="fb-login-button" data-max-rows="1" data-size="medium" data-auto-logout-link="true"></div>
+<!--	<fb:login-button scope="public_profile,email" onlogin="checkLoginState();<">
+</fb:login-button>	-->
+	</div>
+        <div id="main" class="container-fluid">
+            <div id="main_row" class="row">
+<!--                <div id="main_left" class="cols_3">
+</div> -->
+                <div id="main_content" class="cols_12">
+                    {% block content %}{% endblock %}
+                </div>
+<!--                <div id="main_right" class="cols_3">
+</div> -->
+
+            </div>
+        </div>
+    </body>
+</html>
+
